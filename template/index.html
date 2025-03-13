@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Wall Color Change</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            color: #333;
+        }
+        img {
+            border: 5px solid #333;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        input {
+            margin-top: 10px;
+            padding: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Live Wall Color Segmentation</h1>
+    
+    <img src="{{ url_for('video_feed') }}" width="640" height="480">
+    
+    <br><br>
+    <label for="wallColor">Choose Wall Color:</label>
+    <input type="color" id="wallColor" value="#3278C8">
+    <button onclick="changeColor()">Apply Color</button>
+
+    <script>
+        function changeColor() {
+            let color = document.getElementById("wallColor").value;
+            fetch('/set_color', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'color=' + encodeURIComponent(color)
+            });
+        }
+    </script>
+</body>
+</html>
